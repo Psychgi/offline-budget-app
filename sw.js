@@ -1,5 +1,6 @@
-const CACHE_NAME = "offline-budget-cache-v2";
+const CACHE_NAME = "offline-budget-cache-v1";
 const ASSETS = [
+  "./",
   "./index.html",
   "./styles.css",
   "./app.js",
@@ -25,16 +26,12 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      return (
-        cached ||
-        fetch(event.request)
-          .then((resp) => {
-            const copy = resp.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-            return resp;
-          })
-          .catch(() => caches.match("./index.html"))
-      );
+      return cached || fetch(event.request).then((resp) => {
+        // Cache new requests
+        const copy = resp.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return resp;
+      }).catch(() => caches.match("./index.html"));
     })
   );
 });
