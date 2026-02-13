@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#f6f3ee" />
+  <title>Offline Budget Tracker</title>
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+</head>
+<body>
+  <header class="header">
+    <div>
+      <h1>Budget Tracker</h1>
+      <p class="sub">Offline only · Saves on this device</p>
+    </div>
+    <button id="installBtn" class="btn ghost" hidden>Install</button>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Dashboard</h2>
+      <div class="grid3">
+        <div class="stat">
+          <div class="label">Today</div>
+          <div class="value" id="todayTotal">₱0</div>
+        </div>
+        <div class="stat">
+          <div class="label">This Week</div>
+          <div class="value" id="weekTotal">₱0</div>
+        </div>
+        <div class="stat">
+          <div class="label">This Month</div>
+          <div class="value" id="monthTotal">₱0</div>
+        </div>
+      </div>
+
+      <div class="budgetRow">
+        <div class="budgetBox">
+          <label for="monthlyBudget">Monthly Budget (optional)</label>
+          <input id="monthlyBudget" type="number" inputmode="decimal" placeholder="e.g. 15000" />
+        </div>
+        <div class="budgetBox">
+          <div class="label">Remaining</div>
+          <div class="value" id="remaining">₱0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Add Expense</h2>
+
+      <form id="expenseForm" class="form">
+        <div class="row">
+          <div class="field">
+            <label for="date">Date</label>
+            <input id="date" type="date" required />
+          </div>
+          <div class="field">
+            <label for="amount">Amount (₱)</label>
+            <input id="amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="category">Category</label>
+            <select id="category" required></select>
+          </div>
+          <div class="field">
+            <label for="type">Needs/Wants</label>
+            <select id="type" required>
+              <option value="Needs">Needs</option>
+              <option value="Wants">Wants</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notes">Notes (optional)</label>
+          <input id="notes" type="text" maxlength="80" placeholder="e.g. lunch, jeep fare, load" />
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="submit">Save Expense</button>
+          <button class="btn ghost" id="resetBtn" type="button">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="rowTitle">
+        <h2>History</h2>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search notes/category…" />
+          <select id="filterType">
+            <option value="">All</option>
+            <option value="Needs">Needs</option>
+            <option value="Wants">Wants</option>
+          </select>
+          <select id="filterCategory">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Type</th>
+              <th class="right">Amount</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <div class="dangerZone">
+        <button class="btn danger" id="exportBtn" type="button">Export CSV</button>
+        <button class="btn danger ghost" id="wipeBtn" type="button">Delete All Data</button>
+      </div>
+      <p class="tiny">Tip: Export CSV weekly/monthly to keep a backup.</p>
+    </section>
+
+    <footer class="footer">
+      <p class="tiny">Offline Budget Tracker · Data stays on your device.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

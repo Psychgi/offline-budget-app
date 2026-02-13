@@ -1,0 +1,9 @@
+{
+  "name": "Offline Budget Tracker",
+  "short_name": "Budget",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f3ee",
+  "theme_color": "#f6f3ee",
+  "icons": []
+}
